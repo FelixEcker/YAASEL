@@ -1,0 +1,135 @@
+<!--DOCTYPE html -->
+<html>
+  <head>
+    <title>YAASEL Interpreter</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>YAASEL Interpreter in JavaScript</h1>
+    <div id="interpreter-wrapper">
+      <table>
+      <tr>
+        <th>Program</th>
+        <th>Program Output</th>
+        <th>Stack</th>
+      </tr>
+      <tr>
+        <td><textarea id="input" cols="80" rows="40"></textarea></td>
+        <td><textarea id="output" cols="80" rows="40" disabled></textarea></td>
+        <td><textarea id="stack" cols="3" rows="40" disabled></textarea></td>
+      </tr>
+      </table>
+      <textarea id="stdin" cols="160" rows="1"></textarea><br/>
+      <button onclick="runYAASEL()">Execute</button><button onclick="submitInput()">Submit Input</button>
+    </div>
+    
+    <script>
+      var waitingForInput = false;
+      var timeout = 1000000; // 1000000ms = 1000 seconds
+      
+      function submitInput() {
+        waitingForInput = false;
+      }
+    
+      async function runYAASEL() {
+        document.getElementById("output").value = ""; // Clear Output box
+      
+        // Parse SourceCode
+        var text = document.getElementById("input").value.replace(/[^><=:!&*\-+#'"*~%]/g,'').split("");
+        alert(text);
+        var stack = []; // Stack
+        var stash = 0;  // Buffer/Stash
+        for (var i = 0; i < text.length; i++) {
+          document.getElementById("stack").value = createStackString([...stack]);
+        
+          switch(text[i]) {
+          case '>':
+            if (stack[stack.length-1] > stack[stack.length-2]) break;
+            for (var j = i; j >= 0; j--) if (text[j] == ":") {i = j; break;}
+            i = 0;
+            break;
+          case '<':
+            if (stack[stack.length-1] < stack[stack.length-2]) break;
+            for (var j = i; j >= 0; j--) if (text[j] == ":") {i = j; break;}
+            i = 0;
+            break;
+          case '=':
+            if (stack[stack.length-1] == stack[stack.length-2]) break;
+            for (var j = i; j >= 0; j--) if (text[j] == ":") {i = j; break;}
+            i = 0;
+            break;
+          case ':':
+            break;
+          case '!':
+            for (var j = i; j >= 0; j--) if (text[j] == ":") {i = j; break;}
+            i = 0;
+            break;
+          case '&':
+            stack.push(stack.pop()+stash);
+            break;
+          case '+':
+            stack.push(stack.pop()+1);
+            break;
+          case '-':
+            stack.push(stack.pop()-1);
+            break;
+          case '#':
+            stack.pop();
+            break;
+          case '\'':
+            stash = stack.pop();
+            break;
+          case '"':
+            stack.push(stash);
+            break;
+          case '*':
+            stack.push(0);
+            break;
+          case '~':
+            // Set Waiting Flag
+            waitingForInput = true;
+            await gotInput(10); // Wait till user pressed "Submit Input"
+            
+            // Write Input to Stack
+            var split = document.getElementById("stdin").value.split("");
+            for (var j = 0; j < split.length; j++) stack.push(split[j].charCodeAt(0));
+            break;
+          case '%':
+            document.getElementById("output").value += String.fromCharCode(stack[stack.length-1]);
+            break;
+          }
+          await sleep(100);
+        }
+      }
+      
+      // Waits till the waitingForInput flag is false
+      function gotInput() {
+        var start = Date.now();
+        return new Promise(wait); 
+   
+        function wait(resolve, reject) {
+          if (!waitingForInput)
+            resolve(!waitingForInput);
+          else if (timeout && (Date.now() - start) >= timeout)
+            reject(new Error("timeout"));
+          else
+            setTimeout(wait.bind(this, resolve, reject), 30);
+        }
+      }
+      
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      
+      function createStackString(stack) {
+        var string = "";
+        
+        for (var i = 0; i < stack.length; i++) {
+          string += stack.pop()+"\n";
+        }
+        
+        return string;
+      }
+    </script>
+  </body>
+</html>
