@@ -1,4 +1,4 @@
-#YASEL
+# YASEL
 Yet Another Stack-Based Eso-Lang
 
 ## Introduction
