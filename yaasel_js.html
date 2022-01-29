@@ -20,7 +20,8 @@
       </tr>
       </table>
       <textarea id="stdin" cols="160" rows="1"></textarea><br/>
-      <button onclick="runYAASEL()">Execute</button><button onclick="submitInput()">Submit Input</button>
+      <button onclick="runYAASEL()">Execute</button><button onclick="submitInput()">Submit Input</button><br/>
+      <em><a href="https://github.com/FelixEcker/YAASEL/blob/master/yaasel_js.html">Source Code</a></em>
     </div>
     
     <script>
@@ -36,7 +37,6 @@
       
         // Parse SourceCode
         var text = document.getElementById("input").value.replace(/[^><=:!&*\-+#'"*~%]/g,'').split("");
-        alert(text);
         var stack = []; // Stack
         var stash = 0;  // Buffer/Stash
         for (var i = 0; i < text.length; i++) {
@@ -63,6 +63,9 @@
           case '!':
             for (var j = i; j >= 0; j--) if (text[j] == ":") {i = j; break;}
             i = 0;
+            break;
+          case "$":
+            for (var j = i; j < text.length; j++) if (text[j] == ":") {i = j; break;}
             break;
           case '&':
             stack.push(stack.pop()+stash);
@@ -123,8 +126,8 @@
       
       function createStackString(stack) {
         var string = "";
-        
-        for (var i = 0; i < stack.length; i++) {
+        var size = stack.length;
+        for (var i = 0; i < size; i++) {
           string += stack.pop()+"\n";
         }
         

@@ -70,6 +70,11 @@ public class Main {
 					for (int j = i; j >= 0; j--) if (program[j] == ':') lastindex = j;
 					i = lastindex;
 					break;
+				case '$': // Jump to next Jump Point
+					lastindex = i;
+					for (int j = i; j < program.length; j++) if (program[j] == ':') lastindex = j;
+					i = lastindex;
+					break;
 				case '>': // Larger Than
 					if (STACK.peek() > STACK.elementAt(STACK.size()-2)) break;
 					lastindex = 0;
