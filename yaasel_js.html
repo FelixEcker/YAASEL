@@ -36,7 +36,7 @@
         document.getElementById("output").value = ""; // Clear Output box
       
         // Parse SourceCode
-        var text = document.getElementById("input").value.replace(/[^><=:!&*\-+#'"*~%]/g,'').split("");
+        var text = document.getElementById("input").value.replace(/[^><=:!&*\-+#'"*~%$]/g,'').split("");
         var stack = []; // Stack
         var stash = 0;  // Buffer/Stash
         for (var i = 0; i < text.length; i++) {
@@ -65,7 +65,7 @@
             i = 0;
             break;
           case "$":
-            for (var j = i; j < text.length; j++) if (text[j] == ":") {i = j; break;}
+            if (stack.length == 0) i = text.length;
             break;
           case '&':
             stack.push(stack.pop()+stash);
