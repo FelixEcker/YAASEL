@@ -1,0 +1,41 @@
+*+++++Max Execs
+*     Exec Counter
+:     Print JP
+*
+++++  Start with 4
+'     Stash
+"     Copy Stash
+&     Merge      8
+'     Stash
+"     Copy Stash
+&     Merge      16
+'     Stash
+"     Copy Stash
+&     Merge      32
+'     Stash
+*     New Stack Entry
+"     Copy Stash
+&     Merge      64
+++++++++         72 (H)
+%
+---              69 (E)
+%
++++++++          76 (L)
+%%
++++
+%                79 (O)
+"%#              32 (Space)
+++++++++         87 (W)
+%
+--------         79 (O)
+%
++++              82 (R)
+%
+------           76 (L)
+%
+--------         68 (D)
+%
+"+%              33 (Exclamation)
+#* ++++++++++ %  10 (LineFeed)
+###              Void all cells used to for printing
++=               Increment Exec Counter, Check if at Max Execs
