@@ -47,7 +47,7 @@ is not in the instruction set is regarded as a Comment.
 ```
 
 ## Statements
-###Conditionals
+### Conditionals
 -  `>` Value larger than
 -  `<` Value smaller than
 -  `=` Value equal to <br>
@@ -58,11 +58,11 @@ is not in the instruction set is regarded as a Comment.
    the stack, where the top value is placed to the left 
    of the operator and the second to the right.
 
-###Jumps:
+### Jumps:
 -  `:` Jump Point
 -  `!` Jump to last Jump Point
   
-###Data/IO:
+### Data/IO:
 - `&` Add top of stack with buffer
 - `+` Increment top of stack
 - `-` Decrement top of stack
