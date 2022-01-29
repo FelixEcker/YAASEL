@@ -1,5 +1,5 @@
-# YASEL
-Yet Another Stack-Based Eso-Lang
+# YAASEL
+Yet Another Another Stack-Based Eso-Lang
 
 ## Introduction
 YASEL is an Esoteric Stack-Based Programming Language. It is untyped
