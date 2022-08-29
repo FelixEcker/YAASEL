@@ -1,26 +1,28 @@
 <!--DOCTYPE html -->
-<html>
-  <head>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>YAASEL Interpreter</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
   </head>
   <body>
     <h1>YAASEL Interpreter in JavaScript</h1>
     <div id="interpreter-wrapper">
       <table>
-      <tr>
+      <tbody><tr>
         <th>Program</th>
         <th>Program Output</th>
         <th>Stack</th>
+        <th>Stash</th>
       </tr>
       <tr>
         <td><textarea id="input" cols="80" rows="40"></textarea></td>
-        <td><textarea id="output" cols="80" rows="40" disabled></textarea></td>
-        <td><textarea id="stack" cols="3" rows="40" disabled></textarea></td>
+        <td><textarea id="output" cols="80" rows="40" disabled="disabled"></textarea></td>
+        <td><textarea id="stack" cols="3" rows="40" disabled="disabled"></textarea></td>
+        <td><textarea id="stash" cols="3" rows="40" disabled="disabled"></textarea></td>
       </tr>
-      </table>
-      <textarea id="stdin" cols="160" rows="1"></textarea><br/>
-      <button onclick="runYAASEL()">Execute</button><button onclick="submitInput()">Submit Input</button><br/>
+      </tbody></table>
+      <textarea id="stdin" cols="160" rows="1" style="width: 1176px; height: 23px;"></textarea><br>
+      <button onclick="runYAASEL()">Execute</button><button onclick="submitInput()">Submit Input</button><br>
       <em><a href="https://github.com/FelixEcker/YAASEL/blob/master/yaasel_js.html">Source Code</a></em>
     </div>
     
@@ -41,6 +43,7 @@
         var stash = 0;  // Buffer/Stash
         for (var i = 0; i < text.length; i++) {
           document.getElementById("stack").value = createStackString([...stack]);
+          document.getElementById("stash").value = stash;
         
           switch(text[i]) {
           case '>':
@@ -81,9 +84,11 @@
             break;
           case '\'':
             stash = stack.pop();
+            document.getElementById("stash").value = stash;
             break;
           case '"':
             stack.push(stash);
+            document.getElementById("stash").value = stash;
             break;
           case '*':
             stack.push(0);
@@ -134,5 +139,5 @@
         return string;
       }
     </script>
-  </body>
-</html>
+  
+</body></html>
